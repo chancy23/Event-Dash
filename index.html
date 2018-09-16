@@ -4,47 +4,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Crimino</title>
-    <link rel="shortcut icon" type="image/png" href="./assets/images/handcuff_icon.png">
+    <title>Event Dash</title>
+    <link rel="shortcut icon" type="image/png" href="./assets/images/smileyIcon.png">
+    <!-- Compiled and minified Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
-    <!-- Compiled and minified CSS -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
 </head>
 
 <body>
-    <!-- This is the header for the logo -->
-    <div class="header">
+    <!-- Add Event Modal...opens from button on click -->
+    <div id="addEvent" class="modal">
+        <div class="modal-content">
+        <h4>Add Event</h4>
+        <!-- form section -->
+            <div class="row">
+                <form class="col s12" id="addEventForm">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="eventTitle" type="text" class="validate">
+                            <label for="eventTitle">Event Title</label>
+                        </div>
+                    </div>
 
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="date" type="text" class="validate">
+                            <label for="date">Date</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="time" type="text" class="validate">
+                            <label for="time">Time</label>
+                        </div>
+                    </div>
+                    <!-- location section -->
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <input id="street" type="text" class="validate">
+                            <label for="street">Street</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <input id="city" type="text" class="validate">
+                            <label for="city">City</label>
+                        </div>
+                        <div class="input-field col s2">
+                            <input id="state" type="text" class="validate">
+                            <label for="state">State</label>
+                        </div>
+                        <div class="input-field col s2">
+                                <input id="zip" type="text" class="validate">
+                                <label for="zip">Zip</label>
+                        </div>
+                    </div>
+                    
+                    <!-- Description text field -->
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="description" class="materialize-textarea"></textarea>
+                            <label for="description">Event Details</label>
+                        </div>
+                    </div>
+
+                    <!-- place to select twitter followers to add to event-->
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="invitees" type="text" class="validate">
+                            <label for="invitees">Invitees</label>
+                        </div>
+                    </div>
+                    <!-- form buttons -->
+                    <button type="submit" form="addEventForm" class="btn waves-effect waves-light cyan" id="submitEvent" name="submitEvent">Submit</button>
+                    <a class="modal-close waves-effect waves-cyan btn-flat">Cancel</a>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <!-- This is the side bar for the search criteria -->
-    <div class="sidebar searchArea">
+    <nav>
+        <div class="nav-wrapper grey darken-2">
+            <div class="container">
+                <a href="#" class="brand-logo">Event Dash</a>
+                <!-- Modal Trigger...opens the Add Event modal-->
+                <button data-target="addEvent" class="btn modal-trigger right cyan" id="addEventButton">Add Event</button>
+            </div>
+        </div>
+    </nav>
 
+    <!-- main container -->
+    <div class="container">
+        <div class="row">
+            <!-- this is where the events for the results will display -->
+            <div class="col s12" id="allEvents">
+                <h5>Current Events</h5>
+            </div>
+        </div>
     </div>
 
-    <!-- this is the area for the map -->
-    <div class="mapArea">
-
-    </div>
-
-    <!-- this is where the table for the results will display -->
-    <div class="results">
-
-    </div>
-    <!-- placeholder for previous -->
-    <div class="previousSearches">
-
-    </div>
-
-     <!-- jquery CDN -->
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- footer -->
+    <footer class="page-footer grey darken-2">
+        <div class="row">
+            <div class="col s12 center">
+            © 2018 Copyright 'Murica
+            </div>
+        </div>
+    </footer>
+    
+    <!-- javascript and Firebase links -->
+        <!-- jquery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Compiled and minified JavaScript for materialize-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <!-- link for Firebase DB -->
-    <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
     <!-- local JS file -->
     <script src="./assets/javascript/logic.js"></script>
+    <!-- link for Firebase DB -->
+    <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
+            
+</body>
     
 </body>
 </html>
