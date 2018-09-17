@@ -1,0 +1,13 @@
+#addEventButton {
+    margin-top: 13px;
+}
+
+.page-footer {
+    position: fixed;
+    bottom: 0%;
+    width: 100%;
+}
+
+.card {
+    margin: 30px;
+}
