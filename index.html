@@ -8,6 +8,7 @@
     <link rel="shortcut icon" type="image/png" href="./assets/images/smileyIcon.png">
     <!-- Compiled and minified Materialize CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
@@ -21,38 +22,45 @@
                 <form class="col s12" id="addEventForm">
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="eventTitle" type="text" class="validate">
+                            <input id="eventTitle" type="text" class="validate" required="" aria-required="true">
                             <label for="eventTitle">Event Title</label>
+                            <span class="helper-text" data-error="Required"></span>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="input-field col s6">
-                            <input id="date" type="text" class="validate">
+                            <input id="date" type="text" class="validate" required="" aria-required="true">
                             <label for="date">Date</label>
+                            <span class="helper-text" data-error="Required"></span>
                         </div>
                         <div class="input-field col s6">
-                            <input id="time" type="text" class="validate">
+                            <input id="time" type="text" class="validate" required="" aria-required="true">
                             <label for="time">Time</label>
+                            <span class="helper-text" data-error="Required"></span>
                         </div>
                     </div>
                     <!-- location section -->
                     <div class="row">
                         <div class="input-field col s4">
-                            <input id="street" type="text" class="validate">
+                            <input id="street" type="text" class="validate" required="" aria-required="true">
                             <label for="street">Street</label>
+                            <span class="helper-text" data-error="Required"></span>
                         </div>
                         <div class="input-field col s4">
-                            <input id="city" type="text" class="validate">
+                            <input id="city" type="text" class="validate" required="" aria-required="true">
                             <label for="city">City</label>
+                            <span class="helper-text" data-error="Required"></span>
                         </div>
                         <div class="input-field col s2">
-                            <input id="state" type="text" class="validate">
+                            <input id="state" type="text" class="validate" required="" aria-required="true">
                             <label for="state">State</label>
+                            <span class="helper-text" data-error="Required"></span>
                         </div>
                         <div class="input-field col s2">
-                                <input id="zip" type="text" class="validate">
+                                <input id="zip" type="text" class="validate" required="" aria-required="true">
                                 <label for="zip">Zip</label>
+                                <span class="helper-text" data-error="Required"></span>
                         </div>
                     </div>
                     
@@ -72,10 +80,18 @@
                         </div>
                     </div>
                     <!-- form buttons -->
-                    <button type="submit" form="addEventForm" class="btn waves-effect waves-light cyan" id="submitEvent" name="submitEvent">Submit</button>
+                    <button type="submit" form="addEventForm" class="modal-close btn waves-effect waves-light cyan" id="submitEvent" name="submitEvent">Submit</button>
                     <a class="modal-close waves-effect waves-cyan btn-flat">Cancel</a>
                 </form>
             </div>
+        </div>
+    </div>
+    
+    <!-- modal for if there is a blank required filled in form -->
+    <div id="emptyFieldError" class="modal">
+        <div class="modal-content">
+            <h4>Oops</h4>
+            <p>It looks like you left a required field blank.</p>
         </div>
     </div>
 

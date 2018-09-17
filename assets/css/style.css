@@ -1,13 +1,40 @@
 #addEventButton {
     margin-top: 13px;
 }
+/* event card styling items */
+.card .card-title {
+    font-size: 20px;
+}
 
-.page-footer {
+.card.small .card-image {
+    max-height: 40%
+}
+
+.card .card-content {
+    font-size: 14px;
+    padding: 12px;
+}
+
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
+    font-size: 14px;
+    color: plum;
+}
+
+p {
+    padding-bottom: 5px;
+}
+
+
+
+
+/* .page-footer {
     position: fixed;
     bottom: 0%;
     width: 100%;
-}
+    margin-top: 40px;
+} */
 
-.card {
-    margin: 30px;
-}
+/* this is if there is a button floating at the bottom */
+/* .eventDiv {
+    margin-bottom: 15px;
+} */
