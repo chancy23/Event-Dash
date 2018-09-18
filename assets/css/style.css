@@ -1,5 +1,6 @@
 #addEventButton {
-    margin-top: 13px;
+    margin-top: 1.5%;
+    margin-right: 2%
 }
 /* event card styling items */
 .card .card-title {
@@ -24,17 +25,22 @@ p {
     padding-bottom: 5px;
 }
 
-
-
-
-/* .page-footer {
-    position: fixed;
-    bottom: 0%;
-    width: 100%;
-    margin-top: 40px;
-} */
+.page-footer {
+    height: 100%;
+}
 
 /* this is if there is a button floating at the bottom */
 /* .eventDiv {
     margin-bottom: 15px;
 } */
+
+/* adjust itesm in nav header to fit on small screens and look good */
+@media only screen and (max-width: 992px) {
+    nav .brand-logo {
+        left: 25%;
+        font-size: 1.5rem;
+    }
+    #addEventButton {
+        margin-top: 2.5%;
+    }
+}

@@ -14,6 +14,7 @@ $(document).ready(function() {
   firebase.initializeApp(config);
   
   var database = firebase.database();
+  var eventRef = database.ref("event/");
 
   //global variables==============================================================
 
@@ -22,12 +23,27 @@ $(document).ready(function() {
 
 
   //functions======================================================================
+  function resetForm() {
+    //clear the input fields for the user and reset the validate class on required inputes 
+    $("#eventTitle").val("").attr("class", "validate");
+    $("#date").val("").attr("class", "validate");
+    $("#time").val("").attr("class", "validate");
+    $("#street").val("").attr("class", "validate");
+    $("#city").val("").attr("class", "validate");
+    $("#state").val("").attr("class", "validate");
+    $("#zip").val("").attr("class", "validate");
+    $("#description").val("");
+    // placeholder for invitees based on twitter API call
+    //$("#invitees").val("");
 
-
-
-
+    //reset the lable active state back to inactive or blank
+    $("label").attr("class", "");
+  };
 
   //onclick events=================================================================
+
+  //when cancel in the form is clicked, reset the form to its original state
+  $("#cancelButton").click(resetForm);
 
   //This opens the modals on the applicable button click
   $("#addEvent, #emptyFieldError").modal();
@@ -50,7 +66,7 @@ $(document).ready(function() {
     var zip = $("#zip").val().trim();
     var description = $("#description").val().trim();
     // placeholder for invitees based on twitter API call
-    //var invitees = ;
+    //var invitees = $("#invitees").val().trim();
 
     //make it so that if there is an empty field form won't submit (user input validation)
     if ((eventTitle === "") || (date === "") ||(time === "") || (street === "") || (city === "") || (state === "") || (zip === "")) {
@@ -74,8 +90,8 @@ $(document).ready(function() {
         description: description
       };
 
-      // send the event info to the db
-      database.ref().push(eventInfo);
+      // send the event info to the db under an event node
+      database.ref("event/").push(eventInfo);
 
       //testing area
       console.log("event title: "+ eventTitle);
@@ -87,22 +103,20 @@ $(document).ready(function() {
       console.log("event zip: "+ zip);
       console.log("event details: "+ description);
 
-      //clear the input fields for the user
-      $("#eventTitle").val("");
-      $("#date").val("");
-      $("#time").val("");
-      $("#street").val("");
-      $("#city").val("");
-      $("#state").val("");
-      $("#zip").val("");
-      $("#description").val("");
+      //reset the form after submit is clicked
+      resetForm();
     };
   });
 
   //on child event for datbase to be call to get the snapshot values
-  database.ref().on("child_added", function(snapshotChild) {
+  eventRef.on("child_added", function(snapshotChild) {
     //create a variable to hold the child value
     var cv = snapshotChild.val();
+
+    //create a key for the event...the keys in console.log are different than the ones in the DB 
+    //and they change every time page is refreshed...why
+    // var eventKey = eventRef.get().key;
+    // console.log(eventKey);
 
     //assign the child snapshot values to the  variables
     eventTitle = cv.eventTitle;
