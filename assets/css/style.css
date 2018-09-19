@@ -1,3 +1,11 @@
+body{
+    background-image: url("../images/partyBGI.jpg");
+}
+
+h5 {
+    color: white;
+}
+
 #addEventButton {
     margin-top: 1.5%;
     margin-right: 2%
@@ -25,14 +33,10 @@ p {
     padding-bottom: 5px;
 }
 
-.page-footer {
-    height: 100%;
-}
-
 /* this is if there is a button floating at the bottom */
-/* .eventDiv {
+.eventDiv {
     margin-bottom: 15px;
-} */
+}
 
 /* adjust itesm in nav header to fit on small screens and look good */
 @media only screen and (max-width: 992px) {

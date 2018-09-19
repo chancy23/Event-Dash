@@ -28,14 +28,16 @@
                         </div>
                     </div>
 
+                    
                     <div class="row">
                         <div class="input-field col s6">
-                            <input id="date" type="text" class="validate" required="" aria-required="true">
+                            <!-- to remove date picker, just remove datpicker from below -->
+                            <input id= "date" type="text" class="datepicker validate" required="" aria-required="true">
                             <label for="date">Date</label>
                             <span class="helper-text" data-error="Required"></span>
                         </div>
                         <div class="input-field col s6">
-                            <input id="time" type="text" class="validate" required="" aria-required="true">
+                            <input id="time" type="text" class="timepicker validate" required="" aria-required="true">
                             <label for="time">Time</label>
                             <span class="helper-text" data-error="Required"></span>
                         </div>
@@ -71,14 +73,13 @@
                             <label for="description">Event Details</label>
                         </div>
                     </div>
-
-                    <!-- place to select twitter followers to add to event-->
+                    <!-- button to tweet user's followers -->
                     <div class="row">
-                        <div class="input-field col s6">
-                            <input id="invitees" type="text" class="validate">
-                            <label for="invitees">Invitees</label>
+                        <div class="col s6">
+                            <a href="https://twitter.com/intent/tweet?button_hashtag=EventDash&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-size="large" data-text="Hey everyone come to my Event, go to the Link!" data-url="https://chancy23.github.io/Group-Project-One/" data-show-count="false">Tweet #EventDash</a>
                         </div>
                     </div>
+
                     <!-- form buttons -->
                     <button type="submit" form="addEventForm" class="modal-close btn waves-effect waves-light cyan" id="submitEvent" name="submitEvent">Submit</button>
                     <a class="modal-close waves-effect waves-cyan btn-flat" id="cancelButton">Cancel</a>
@@ -114,15 +115,6 @@
             </div>
         </div>
     </div>
-
-    <!-- footer -->
-    <footer class="page-footer grey darken-2">
-        <div class="row">
-            <div class="col s12 center">
-            © 2018 Copyright 'Murica
-            </div>
-        </div>
-    </footer>
     
     <!-- javascript and Firebase links -->
         <!-- jquery CDN -->
@@ -133,6 +125,8 @@
     <script src="./assets/javascript/logic.js"></script>
     <!-- link for Firebase DB -->
     <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
+    <!-- link for the Twitter api button stuff -->
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
             
 </body>
     
