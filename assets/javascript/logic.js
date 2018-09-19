@@ -1,5 +1,19 @@
 $(document).ready(function() {
-  
+  //materialize js intialization of components
+  //for the modals
+  $("#addEvent, #emptyFieldError").modal();
+
+  //for the floating action button on event card
+  $(".goToDetails").floatingActionButton();
+
+  //for the date picker, set to auto close when date is picked
+  $(".datepicker").datepicker({
+    autoClose: true,
+    format: "m/dd/yy"
+  });
+
+  //for time picker
+  $(".timepicker").timepicker();
 
   // Initialize Firebase
   var config = {
@@ -14,6 +28,7 @@ $(document).ready(function() {
   firebase.initializeApp(config);
   
   var database = firebase.database();
+  var eventRef = database.ref("event/");
 
   //global variables==============================================================
 
@@ -22,24 +37,33 @@ $(document).ready(function() {
 
 
   //functions======================================================================
+  function resetForm() {
+    //clear the input fields for the user and reset the validate class on required inputes 
+    $("#eventTitle").val("").attr("class", "validate");
+    $("#date").val("").attr("class", "validate");
+    $("#time").val("").attr("class", "validate");
+    $("#street").val("").attr("class", "validate");
+    $("#city").val("").attr("class", "validate");
+    $("#state").val("").attr("class", "validate");
+    $("#zip").val("").attr("class", "validate");
+    $("#description").val("");
+    // placeholder for invitees based on twitter API call
+    //$("#invitees").val("");
 
-
-
-
+    //reset the lable active state back to inactive or blank
+    $("label").attr("class", "");
+  };
 
   //onclick events=================================================================
 
-  //This opens the modal on button click
-  $("#addEvent").modal();
+  //when cancel in the form is clicked, reset the form to its original state
+  $("#cancelButton").click(resetForm);
 
   //this is the onclick for when the "Submit" button is pushed from the Add Event form 
-  //add input to the DB and create and dispaly teh item on the page
-
+  //add input to the DB and create and display the item on the page
   $("#submitEvent").on("click", function(event) {
     event.preventDefault();
     
-    //test button click
-    console.log("submit button was pushed");
     var eventTitle = $("#eventTitle").val().trim();
     var date = $("#date").val().trim();
     var time = $("#time").val().trim();
@@ -49,39 +73,59 @@ $(document).ready(function() {
     var zip = $("#zip").val().trim();
     var description = $("#description").val().trim();
     // placeholder for invitees based on twitter API call
-    //var invitees = ;
+    //var invitees = $("#invitees").val().trim();
 
-    //create an object to hold all inputs to send to the DB
-    var eventInfo = {
-      eventTitle: eventTitle,
-      date: date,
-      time: time,
-      street: street,
-      city: city,
-      state: state,
-      zip: zip,
-      description: description
+    //make it so that if there is an empty field form won't submit (user input validation)
+    if ((eventTitle === "") || (date === "") ||(time === "") || (street === "") || (city === "") || (state === "") || (zip === "")) {
+      $("#emptyFieldError").modal("open");
+      //make empty required fields turn red, even if they aren't clicked in first...but how
+      $(".helper-text").show();
+      return false;
+      
+    }
+    //if all complete then they can continue (sends info to DB, clears inputs, and closes form)
+    else {
+
+      //google API call to get long/lat and add that as a key and property instea of street, city, state,zip
+      //create an object to hold all inputs to send to the DB
+      var eventInfo = {
+        eventTitle: eventTitle,
+        date: date,
+        time: time,
+        street: street,
+        city: city,
+        state: state,
+        zip: zip,
+        description: description
+      };
+
+      // send the event info to the db under an event node
+      database.ref("event/").push(eventInfo);
+
+      //testing area
+      console.log("event title: " + eventTitle);
+      console.log("event date: " + date);
+      console.log("event time: " + time);
+      console.log("event street: " + street);
+      console.log("event city: " + city);
+      console.log("event state: " + state);
+      console.log("event zip: " + zip);
+      console.log("event details: " + description);
+
+      //reset the form after submit is clicked
+      resetForm();
     };
-
-    // send the event info to the db
-    database.ref().push(eventInfo);
-
-    //testing area
-    console.log("event title: "+ eventTitle);
-    console.log("event date: "+ date);
-    console.log("event time: "+ time);
-    console.log("event street: "+ street);
-    console.log("event city: "+ city);
-    console.log("event state: "+ state);
-    console.log("event zip: "+ zip);
-    console.log("event details: "+ description);
-
   });
 
   //on child event for datbase to be call to get the snapshot values
-  database.ref().on("child_added", function(snapshotChild) {
+  eventRef.on("child_added", function(snapshotChild) {
     //create a variable to hold the child value
     var cv = snapshotChild.val();
+
+    //create a key for the event...the keys in console.log are different than the ones in the DB 
+    //and they change every time page is refreshed...why
+    var eventKey = snapshotChild.key;
+    // console.log(snapshotChild.key);
 
     //assign the child snapshot values to the  variables
     eventTitle = cv.eventTitle;
@@ -93,47 +137,86 @@ $(document).ready(function() {
     zip = cv.zip;
     description = cv.description;
 
-    //create the card to add the information to
-    var $eventCard = $("<div>").addClass("card col s12 m3");
-    //add an image to the top of the card
+    //create the div and a card div to add the information to
+    var $eventCardDiv = $("<div>").addClass("col s12 m4 eventDiv");
+    var $eventCard = $("<div>").addClass("card small");
+    //add an image to the top of the card (*note the image size impacts the height of the img portion current img is 700px*)
     //would like to use different images, maybe an array of images and a for loop to grab a random img?
     var $eventImgDiv = $("<div>").addClass("card-image");
     var $eventImg = $("<img>").attr("src", "./assets/images/colorSplashBG.jpg");
-
     //create a span to have the title over over the image at top of card
     var $eventTitle = $("<span>").addClass("card-title").text(eventTitle);
-    
+
+    //add a button to take user to the event detials page....not opening page need to TS with a TA)
+    var $detailsButton = $("<button>").addClass("btn-floating cyan halfway-fab waves-effect waves-cyan goToDetails");
+    $detailsButton.attr("data-id", eventKey);
+    var $buttonLink = $("<a>").attr("href", "./eventdetails.html");
+    var $buttonIcon = $("<i>").addClass("material-icons").text("info_outline");
+    //append link and icon to the button element
+    $detailsButton.append($buttonLink, $buttonIcon);
+
+
     //create a div for the card content, to put some of the info
     var $eventCardBody = $("<div>").addClass("card-content");
     //create a $var for each db out and assign to a p element to append to card body variable
-    var $date = $("<p>").text(date);
-    var $time = $("<p>").text(time);
+    var $dateTime = $("<p>").text(date + "  |  " + time);
+    // var $time = $("<p>").text(time);
     var $description = $("<p>").text(description);
 
-    //append the p elements to the card content
+    //link section to link to event details (currently working on getting button to work)
+    // var $actionDiv = $("<div>").addClass("card-action");
+    // var $eventDetails = $("<a>").attr("href", "./eventdetails.html").text("Full Details");
+    // $actionDiv.append($eventDetails);
+
+     //append image and Event title to the image div
+     $eventImgDiv.append($eventImg, $eventTitle);
+
+    //append the p elements and the button to the card content
     $eventCardBody.append(
-      $date,
-      $time,
+      $dateTime,
       $description
     );
 
-    //append image and Event title to the image div
-    $eventImgDiv.append($eventImg, $eventTitle);
-
-    //append the card image div and card content to the card div
+    //append the card image div and card body to the card div
     $eventCard.append(
       $eventImgDiv,
-      $eventCardBody);
+      $eventCardBody,
+      // $actionDiv
+      $detailsButton
+    );
+
+    //append the card to the overall event div element
+    $eventCardDiv.append($eventCard);
 
     //and finally append card to the dom
-    $("#allEvents").append($eventCard);
+    $("#allEvents").append($eventCardDiv);
 
   });
+
+  //on click for when user clicks the "info" button on the event card. Goes to Event details page
+  //not working I htink I need to add "action" or something to the button when its added
+  // var testID;
+  // console.log(testID);
+  $("#allEvents").on("click", ".goToDetails", function(event) {
+    event.preventDefault();
+    //opens event details pages
+    window.location.href = "./eventdetails.html";
+    //grab the specific event from the DB
+    var showEventDetail = $(this).attr("data-id");
+    
+    eventRef.ref("/" + showEventDetail).then(function(val) {
+      console.log(val)
+    });
+    // console.log(eventRef);
+    
+      //displays it in the div on the eventsdetails html page
+      $("#eventDetails").text("data-id");
+    });
+
+    console.log("event details button clicked");
+
     
   
-
-
-
 
 
 })

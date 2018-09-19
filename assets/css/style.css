@@ -1,13 +1,50 @@
+body{
+    background-image: url("../images/partyBGI.jpg");
+}
+
+h5 {
+    color: white;
+}
+
 #addEventButton {
-    margin-top: 13px;
+    margin-top: 1.5%;
+    margin-right: 2%
+}
+/* event card styling items */
+.card .card-title {
+    font-size: 20px;
 }
 
-.page-footer {
-    position: fixed;
-    bottom: 0%;
-    width: 100%;
+.card.small .card-image {
+    max-height: 40%
 }
 
-.card {
-    margin: 30px;
+.card .card-content {
+    font-size: 14px;
+    padding: 12px;
+}
+
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
+    font-size: 14px;
+    color: plum;
+}
+
+p {
+    padding-bottom: 5px;
+}
+
+/* this is if there is a button floating at the bottom */
+.eventDiv {
+    margin-bottom: 15px;
+}
+
+/* adjust itesm in nav header to fit on small screens and look good */
+@media only screen and (max-width: 992px) {
+    nav .brand-logo {
+        left: 25%;
+        font-size: 1.5rem;
+    }
+    #addEventButton {
+        margin-top: 2.5%;
+    }
 }
