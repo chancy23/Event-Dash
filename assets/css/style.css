@@ -1,18 +1,58 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,600,700');
+
 body{
     background-image: url("../images/partyBGI.jpg");
-}
-
-h5 {
-    color: white;
+    font-family: 'Nunito', sans-serif;
 }
 
 #addEventButton {
     margin-top: 1.5%;
     margin-right: 2%
 }
+
+/* modal adjustments */
+.modal {
+    width: 70%;
+}
+
+h6 {
+    font-family: 'Nunito:800', sans-serif;
+}
+
+/* datepicker and timepicker style adjustments */
+.datepicker-date-display,
+.timepicker-digital-display {
+    background-color: #6C147F;
+}
+
+.datepicker-table td.is-selected {
+    background-color: #A31EBF;
+}
+
+.datepicker-table td.is-today,
+.datepicker-cancel,
+.datepicker-done,
+.timepicker-close {
+    color: #A31EBF;
+}
+
+.timepicker-canvas-bg,
+.timepicker-canvas-bearing {
+    fill: #A31EBF;
+}
+
+.timepicker-canvas line {
+    stroke: #A31EBF;
+}
+
+/* main container styling */
+h5 {
+    color: white;
+}
+
 /* event card styling items */
 .card .card-title {
-    font-size: 20px;
+    font-size: 22px;
 }
 
 .card.small .card-image {
@@ -20,25 +60,19 @@ h5 {
 }
 
 .card .card-content {
-    font-size: 14px;
+    font-size: 16px;
     padding: 12px;
 }
 
-.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
-    font-size: 14px;
-    color: plum;
-}
-
-p {
+.dateTime {
     padding-bottom: 5px;
 }
 
-/* this is if there is a button floating at the bottom */
 .eventDiv {
     margin-bottom: 15px;
 }
 
-/* adjust itesm in nav header to fit on small screens and look good */
+/* adjust items in nav header to fit on small screens and look good */
 @media only screen and (max-width: 992px) {
     nav .brand-logo {
         left: 25%;

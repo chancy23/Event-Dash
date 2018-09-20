@@ -1,10 +1,7 @@
 $(document).ready(function() {
   //materialize js intialization of components
   //for the modals
-  $("#addEvent, #emptyFieldError").modal();
-
-  //for the floating action button on event card
-  $(".goToDetails").floatingActionButton();
+  $(".modal").modal();
 
   //for the date picker, set to auto close when date is picked
   $(".datepicker").datepicker({
@@ -43,12 +40,11 @@ $(document).ready(function() {
     $("#date").val("").attr("class", "validate");
     $("#time").val("").attr("class", "validate");
     $("#street").val("").attr("class", "validate");
+    $("#apt").val("").attr("class", "validate");
     $("#city").val("").attr("class", "validate");
     $("#state").val("").attr("class", "validate");
     $("#zip").val("").attr("class", "validate");
     $("#description").val("");
-    // placeholder for invitees based on twitter API call
-    //$("#invitees").val("");
 
     //reset the lable active state back to inactive or blank
     $("label").attr("class", "");
@@ -68,12 +64,11 @@ $(document).ready(function() {
     var date = $("#date").val().trim();
     var time = $("#time").val().trim();
     var street = $("#street").val().trim();
+    var apt = $("#apt").val().trim();
     var city = $("#city").val().trim();
     var state = $("#state").val().trim();
     var zip = $("#zip").val().trim();
     var description = $("#description").val().trim();
-    // placeholder for invitees based on twitter API call
-    //var invitees = $("#invitees").val().trim();
 
     //make it so that if there is an empty field form won't submit (user input validation)
     if ((eventTitle === "") || (date === "") ||(time === "") || (street === "") || (city === "") || (state === "") || (zip === "")) {
@@ -93,6 +88,7 @@ $(document).ready(function() {
         date: date,
         time: time,
         street: street,
+        apt: apt,
         city: city,
         state: state,
         zip: zip,
@@ -107,6 +103,7 @@ $(document).ready(function() {
       console.log("event date: " + date);
       console.log("event time: " + time);
       console.log("event street: " + street);
+      console.log("event apt: " + apt);
       console.log("event city: " + city);
       console.log("event state: " + state);
       console.log("event zip: " + zip);
@@ -122,20 +119,21 @@ $(document).ready(function() {
     //create a variable to hold the child value
     var cv = snapshotChild.val();
 
-    //create a key for the event...the keys in console.log are different than the ones in the DB 
-    //and they change every time page is refreshed...why
+    //create a variable to hold the DB genereated ID for the event (used to call back the specific event)
     var eventKey = snapshotChild.key;
-    // console.log(snapshotChild.key);
 
-    //assign the child snapshot values to the  variables
+    //assign the child snapshot values to the  variables for the Event Thumbnail
     eventTitle = cv.eventTitle;
     date = cv.date;
     time = cv.time;
+    description = cv.description;
+
+    //For the Map API to get the lat/long
     street = cv.street;
+    apt = cv.apt;
     city = cv.city;
     state = cv.state;
     zip = cv.zip;
-    description = cv.description;
 
     //create the div and a card div to add the information to
     var $eventCardDiv = $("<div>").addClass("col s12 m4 eventDiv");
@@ -148,25 +146,19 @@ $(document).ready(function() {
     var $eventTitle = $("<span>").addClass("card-title").text(eventTitle);
 
     //add a button to take user to the event detials page....not opening page need to TS with a TA)
-    var $detailsButton = $("<button>").addClass("btn-floating cyan halfway-fab waves-effect waves-cyan goToDetails");
+    var $detailsButton = $("<button>").addClass("btn modal-trigger btn-floating cyan halfway-fab waves-effect waves-cyan goToDetails");
     $detailsButton.attr("data-id", eventKey);
-    var $buttonLink = $("<a>").attr("href", "./eventdetails.html");
+    $detailsButton.attr("data-target", "eventDetailsModal");
+    // var $buttonLink = $("<a>").attr("href", "./eventdetails.html");
     var $buttonIcon = $("<i>").addClass("material-icons").text("info_outline");
-    //append link and icon to the button element
-    $detailsButton.append($buttonLink, $buttonIcon);
-
+    //append icon to the button element
+    $detailsButton.append($buttonIcon);
 
     //create a div for the card content, to put some of the info
     var $eventCardBody = $("<div>").addClass("card-content");
     //create a $var for each db out and assign to a p element to append to card body variable
-    var $dateTime = $("<p>").text(date + "  |  " + time);
-    // var $time = $("<p>").text(time);
+    var $dateTime = $("<p>").addClass("dateTime").text(date + "  |  " + time);
     var $description = $("<p>").text(description);
-
-    //link section to link to event details (currently working on getting button to work)
-    // var $actionDiv = $("<div>").addClass("card-action");
-    // var $eventDetails = $("<a>").attr("href", "./eventdetails.html").text("Full Details");
-    // $actionDiv.append($eventDetails);
 
      //append image and Event title to the image div
      $eventImgDiv.append($eventImg, $eventTitle);
@@ -181,7 +173,6 @@ $(document).ready(function() {
     $eventCard.append(
       $eventImgDiv,
       $eventCardBody,
-      // $actionDiv
       $detailsButton
     );
 
@@ -199,24 +190,54 @@ $(document).ready(function() {
   // console.log(testID);
   $("#allEvents").on("click", ".goToDetails", function(event) {
     event.preventDefault();
-    //opens event details pages
-    window.location.href = "./eventdetails.html";
     //grab the specific event from the DB
-    var showEventDetail = $(this).attr("data-id");
-    
-    eventRef.ref("/" + showEventDetail).then(function(val) {
-      console.log(val)
-    });
-    // console.log(eventRef);
-    
+    var eventId = $(this).attr("data-id");
+    //make a variable of the event info from the child node called event and pass in the event ID
+    var query = database.ref().child('event/' + eventId);
+    //call the DB and grab the child event for the query variable
+    query.on("value", function(snapshot) {
+      //a new variable to hold the shapshot value of the key of the event selected
+      var v = snapshot.val();
+
+      //assign the child snapshot values to the  variables
+      eventTitle = v.eventTitle;
+      date = v.date;
+      time = v.time;
+      street = v.street;
+      apt = v.apt;
+      city = v.city;
+      state = v.state;
+      zip = v.zip;
+      description = v.description;
+
+      //testing section
+      // console.log(v);
+      // console.log("Event Detail Title " + eventTitle);
+      // console.log("Event Detail date " + date);
+      // console.log("Event Detail time " + time);
+      // console.log("Event Detail street " + street);
+      // console.log("Event Detail apt " + apt);
+      // console.log("Event Detail city " + city);
+      // console.log("Event Detail state " + state);
+      // console.log("Event Detail zip " + zip);
+      // console.log("Event Detail description " + description);
+
+      //display in the location on the html page or modal window
+      $("#detailTitle").text(eventTitle);
+      $("#detailDate").text(date);
+      $("#detailTime").text(time);
+      $("#detailDescription").text(description);
+      $("#detailStreet").text(street);
+      $("#detailApt").text(" | " + apt);
+      $("#detailCity").text(city);
+      $("#detailState").text(state);
+      $("#detailZip").text(zip);
+
       //displays it in the div on the eventsdetails html page
-      $("#eventDetails").text("data-id");
+      // $("#test").append(showEventDetails);
+      //opens event details pages
+    // window.location.href = "./eventdetails.html";
     });
-
-    console.log("event details button clicked");
-
-    
-  
-
+  });
 
 })
