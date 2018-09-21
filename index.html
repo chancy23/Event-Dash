@@ -10,8 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- google icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <!-- google fonts -->
-    <!-- <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet"> -->
     <!-- local stylesheet -->
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
@@ -32,10 +30,9 @@
                         </div>
                     </div>
 
-                    
+                    <!-- Date and Time section -->
                     <div class="row">
                         <div class="input-field col s5">
-                            <!-- to remove date picker, just remove datpicker from below -->
                             <input id= "date" type="text" class="datepicker validate" required="" aria-required="true">
                             <label for="date">Date</label>
                             <span class="helper-text" data-error="Required"></span>
@@ -126,7 +123,7 @@
             </div>
 
             <div class="modal-footer">
-                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Ok</a>
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Ok</a>
             </div>
         </div>  
     </div>              
@@ -137,17 +134,23 @@
             <h4>Oops</h4>
             <p>It looks like you left a required field blank.</p>
         </div>
+        <div class="modal-footer">
+            <a class="modal-close waves-effect waves-green btn-flat modal-trigger" href="#addEvent">Ok</a>
+        </div>
     </div>
 
-    
-        <!-- modal for if the address is invalid -->
-        <div id="invalidAddressError" class="modal">
-            <div class="modal-content">
-                <h4>Oops</h4>
-                <p>It looks like the address you've entered is invalid. Please trying adding the event again.</p>
-            </div>
+    <!-- modal for if the address is invalid -->
+    <div id="invalidAddressError" class="modal">
+        <div class="modal-content">
+            <h4>Oops</h4>
+            <p>It looks like the address you've entered is invalid. Please trying adding the event again.</p>
+        </div>
+        <div class="modal-footer">
+            <a class="modal-close waves-effect waves-green btn-flat modal-trigger" href="#addEvent">Ok</a>
+        </div>
     </div>
 
+    <!-- Nav bar header -->
     <nav>
         <div class="nav-wrapper grey darken-2">
             <div class="container">
@@ -168,8 +171,8 @@
         </div>
     </div>
     
-    <!-- javascript and Firebase links -->
-        <!-- jquery CDN -->
+    <!-- javascript, Firebase and API links -->
+    <!-- jquery CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Compiled and minified JavaScript for materialize-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -182,7 +185,7 @@
     <!-- link for axios call on google api maps -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- link for google api -->
-    <script src="https://maps.google.com/maps/api/js?sensor=false"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDk3_3qxzVHdnPcw7syHGUTjO72-Z_Ksss&libraries=places&callback=initMap" async defer></script>
             
 </body>
     
