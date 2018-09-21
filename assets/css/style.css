@@ -1,13 +1,84 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,600,700');
+
+body{
+    background-image: url("../images/partyBGI.jpg");
+    font-family: 'Nunito', sans-serif;
+}
+
 #addEventButton {
-    margin-top: 13px;
+    margin-top: 1.5%;
+    margin-right: 2%
 }
 
-.page-footer {
-    position: fixed;
-    bottom: 0%;
-    width: 100%;
+/* modal adjustments */
+.modal {
+    width: 70%;
 }
 
-.card {
-    margin: 30px;
+h6 {
+    font-family: 'Nunito:800', sans-serif;
+}
+
+/* datepicker and timepicker style adjustments */
+.datepicker-date-display,
+.timepicker-digital-display {
+    background-color: #6C147F;
+}
+
+.datepicker-table td.is-selected {
+    background-color: #A31EBF;
+}
+
+.datepicker-table td.is-today,
+.datepicker-cancel,
+.datepicker-done,
+.timepicker-close {
+    color: #A31EBF;
+}
+
+.timepicker-canvas-bg,
+.timepicker-canvas-bearing {
+    fill: #A31EBF;
+}
+
+.timepicker-canvas line {
+    stroke: #A31EBF;
+}
+
+/* main container styling */
+h5 {
+    color: white;
+}
+
+/* event card styling items */
+.card .card-title {
+    font-size: 22px;
+}
+
+.card.small .card-image {
+    max-height: 40%
+}
+
+.card .card-content {
+    font-size: 16px;
+    padding: 12px;
+}
+
+.dateTime {
+    padding-bottom: 5px;
+}
+
+.eventDiv {
+    margin-bottom: 15px;
+}
+
+/* adjust items in nav header to fit on small screens and look good */
+@media only screen and (max-width: 992px) {
+    nav .brand-logo {
+        left: 25%;
+        font-size: 1.5rem;
+    }
+    #addEventButton {
+        margin-top: 2.5%;
+    }
 }

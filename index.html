@@ -8,6 +8,11 @@
     <link rel="shortcut icon" type="image/png" href="./assets/images/smileyIcon.png">
     <!-- Compiled and minified Materialize CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- google icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- google fonts -->
+    <!-- <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet"> -->
+    <!-- local stylesheet -->
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
@@ -20,69 +25,124 @@
             <div class="row">
                 <form class="col s12" id="addEventForm">
                     <div class="row">
-                        <div class="input-field col s12">
-                            <input id="eventTitle" type="text" class="validate">
+                        <div class="input-field col s10">
+                            <input id="eventTitle" type="text" class="validate" required="" aria-required="true">
                             <label for="eventTitle">Event Title</label>
+                            <span class="helper-text" data-error="Required"></span>
                         </div>
                     </div>
 
+                    
                     <div class="row">
-                        <div class="input-field col s6">
-                            <input id="date" type="text" class="validate">
+                        <div class="input-field col s5">
+                            <!-- to remove date picker, just remove datpicker from below -->
+                            <input id= "date" type="text" class="datepicker validate" required="" aria-required="true">
                             <label for="date">Date</label>
+                            <span class="helper-text" data-error="Required"></span>
                         </div>
-                        <div class="input-field col s6">
-                            <input id="time" type="text" class="validate">
+                        <div class="input-field col s5">
+                            <input id="time" type="text" class="timepicker validate" required="" aria-required="true">
                             <label for="time">Time</label>
+                            <span class="helper-text" data-error="Required"></span>
                         </div>
                     </div>
                     <!-- location section -->
                     <div class="row">
-                        <div class="input-field col s4">
-                            <input id="street" type="text" class="validate">
+                        <div class="input-field col s6">
+                            <input id="street" type="text" class="validate" required="" aria-required="true">
                             <label for="street">Street</label>
+                            <span class="helper-text" data-error="Required"></span>
                         </div>
                         <div class="input-field col s4">
-                            <input id="city" type="text" class="validate">
+                            <input id="apt" type="text">
+                            <label for="apt">Apt/Suite Number</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="city" type="text" class="validate" required="" aria-required="true">
                             <label for="city">City</label>
+                            <span class="helper-text" data-error="Required"></span>
                         </div>
                         <div class="input-field col s2">
-                            <input id="state" type="text" class="validate">
+                            <input id="state" type="text" class="validate" required="" aria-required="true">
                             <label for="state">State</label>
+                            <span class="helper-text" data-error="Required"></span>
                         </div>
                         <div class="input-field col s2">
-                                <input id="zip" type="text" class="validate">
+                                <input id="zip" type="text" class="validate" required="" aria-required="true">
                                 <label for="zip">Zip</label>
+                                <span class="helper-text" data-error="Required"></span>
                         </div>
                     </div>
                     
                     <!-- Description text field -->
                     <div class="row">
-                        <div class="input-field col s12">
+                        <div class="input-field col s10">
                             <textarea id="description" class="materialize-textarea"></textarea>
                             <label for="description">Event Details</label>
                         </div>
                     </div>
 
-                    <!-- place to select twitter followers to add to event-->
+                    <!-- button to tweet user's followers -->
                     <div class="row">
-                        <div class="input-field col s6">
-                            <input id="invitees" type="text" class="validate">
-                            <label for="invitees">Invitees</label>
+                        <div class="col s4">
+                            <a href="https://twitter.com/intent/tweet?button_hashtag=EventDash&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-size="large" data-text="Hey everyone come to my Event, go to the Link!" data-url="https://chancy23.github.io/Group-Project-One/" data-show-count="false">Tweet #EventDash</a>
                         </div>
                     </div>
+
                     <!-- form buttons -->
-                    <button type="submit" form="addEventForm" class="btn waves-effect waves-light cyan" id="submitEvent" name="submitEvent">Submit</button>
-                    <a class="modal-close waves-effect waves-cyan btn-flat">Cancel</a>
+                    <button type="submit" form="addEventForm" class="modal-close btn waves-effect waves-light cyan" id="submitEvent" name="submitEvent">Submit</button>
+                    <a class="modal-close waves-effect waves-cyan btn-flat" id="cancelButton">Cancel</a>
                 </form>
             </div>
+        </div>
+    </div>
+
+    <!-- Details Event...opens from button on click on event card -->
+    <div id="eventDetailsModal" class="modal">
+        <div class="modal-content">
+            <h4 id=detailTitle></h4>
+            <div class="row">
+                <div class="col s12">
+                    <h6><span id=detailDate></span> | <span id=detailTime></span></h6>
+                    <p id=detailDescription></p>   
+                </div>
+            </div>
+
+            <!-- Place to show the Address in written form if needed and to test -->
+            <div class="row">
+                <div class="col s12">
+                    <h6>Location:</h6>
+                    <p><span id=detailStreet></span><span id=detailApt></span></p>
+                    <p><span id=detailCity></span>, <span id=detailState></span> <span id=detailZip></span> </p>  
+                </div>
+            </div>
+
+            <!-- Map Area --> 
+            <div class="row">
+                <div class="col s12" id="mapArea">
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Ok</a>
+            </div>
+        </div>  
+    </div>              
+    
+    <!-- modal for if there is a blank required filled in form -->
+    <div id="emptyFieldError" class="modal">
+        <div class="modal-content">
+            <h4>Oops</h4>
+            <p>It looks like you left a required field blank.</p>
         </div>
     </div>
 
     <nav>
         <div class="nav-wrapper grey darken-2">
             <div class="container">
-                <a href="#" class="brand-logo">Event Dash</a>
+                <a href="#" class="brand-logo"><i class="material-icons" style="font-size:36px">event_available</i> Event Dash</a>
                 <!-- Modal Trigger...opens the Add Event modal-->
                 <button data-target="addEvent" class="btn modal-trigger right cyan" id="addEventButton">Add Event</button>
             </div>
@@ -98,15 +158,6 @@
             </div>
         </div>
     </div>
-
-    <!-- footer -->
-    <footer class="page-footer grey darken-2">
-        <div class="row">
-            <div class="col s12 center">
-            © 2018 Copyright 'Murica
-            </div>
-        </div>
-    </footer>
     
     <!-- javascript and Firebase links -->
         <!-- jquery CDN -->
@@ -117,6 +168,8 @@
     <script src="./assets/javascript/logic.js"></script>
     <!-- link for Firebase DB -->
     <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
+    <!-- link for the Twitter api button stuff -->
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
             
 </body>
     
