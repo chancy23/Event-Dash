@@ -27,6 +27,17 @@ $(document).ready(function() {
   var database = firebase.database();
   var eventRef = database.ref("event/");
 
+//All images for top of card
+var allImages = ["./assets/images/colorSplashBG.jpg", "./assets/images/stagelights.jpg", "./assets/images/pinkfireworks.jpg"]
+//functions======================================================================
+function getRandomImg() {
+ //randomly select an image from the array
+ var randomImg = allImages[Math.floor(Math.random() * allImages.length)];
+ // console.log(randomImg);
+ return randomImg;
+};
+
+
   //global variables==============================================================
 
 
