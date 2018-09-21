@@ -22,7 +22,17 @@ $(document).ready(function() {
 
 
   //functions======================================================================
+function newAddress(address) {
+  var streetOne = address[0];
+  var streetTwo = address[1];
+  var city = address[2];
+  var state = address[3];
+  var postal = address[4];
+  var url = "https://us-street.api.smartystreets.com/street-address?auth-id=beff4c51-98d9-dd74-a59f-33303a666a0d&auth-token=kidhgo3nixoho1qgzqsx&candidates=1";
+  var completeUrl = url + "&street=" + streetOne + "&city=" + city + "&state=" + state + "&zipcode=" + postal + "&street2=" + streetTwo;
+ console.log(completeUrl);
 
+}
 
 
 
