@@ -28,7 +28,16 @@ $(document).ready(function() {
   var eventRef = database.ref("event/");
 
   //global variables==============================================================
+  //All images for top of card
+  var allImages = ["./assets/images/colorSplashBG.jpg", "./assets/images/stagelights.jpg", "./assets/images/pinkfireworks.jpg"]
 
+  //functions======================================================================
+  function getRandomImg() {
+    //randomly select an image from the array
+    var randomImg = allImages[Math.floor(Math.random() * allImages.length)];
+    // console.log(randomImg);
+    return randomImg;
+  };
 
 
 
@@ -155,13 +164,14 @@ function newAddress(address) {
     //create the div and a card div to add the information to
     var $eventCardDiv = $("<div>").addClass("col s12 m4 eventDiv");
     var $eventCard = $("<div>").addClass("card small");
-    //add an image to the top of the card (*note the image size impacts the height of the img portion current img is 700px*)
-    //would like to use different images, maybe an array of images and a for loop to grab a random img?
+    //add an image to the top of the card (*note the image size impacts the height of the img portion current img is 700px H x 1236px W*)
     var $eventImgDiv = $("<div>").addClass("card-image");
-    var $eventImg = $("<img>").attr("src", "./assets/images/colorSplashBG.jpg");
+    //to assign random img, call helper function as the url), need to figure out how to not change on page refresh though
+    var $eventImg = $("<img>").attr("src", getRandomImg());
+    
     //create a span to have the title over over the image at top of card
     var $eventTitle = $("<span>").addClass("card-title").text(eventTitle);
-
+ 
     //add a button to take user to the event detials page....not opening page need to TS with a TA)
     var $detailsButton = $("<button>").addClass("btn modal-trigger btn-floating cyan halfway-fab waves-effect waves-cyan goToDetails");
     $detailsButton.attr("data-id", eventKey);
