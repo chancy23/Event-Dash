@@ -150,7 +150,7 @@ $(document).ready(function() {
       var city = address[1];
       var state = address[2];
       var zip = address[3];
-      var url = "https://us-street.api.smartystreets.com/street-address?auth-id=beff4c51-98d9-dd74-a59f-33303a666a0d&auth-token=kiDHgo3nIXOholQGZQSX&candidates=1";
+      var url = "https://us-street.api.smartystreets.com/street-address?auth-id=f8ec66b5-0294-71bb-3648-851dcaad17c3&auth-token=71aUQkL6xMOtZEqLuYCE&candidates=1";
       var completeUrl = url + "&street=" + street + "&city=" + city + "&state=" + state + "&zipcode=" + zip;
     console.log(completeUrl);
 
